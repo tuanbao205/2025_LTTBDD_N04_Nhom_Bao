@@ -101,6 +101,17 @@ class _QuizPageState extends State<QuizPage> {
 
   int get totalQuestions => questions.length;
 
+  void _checkAnswer(int index) {
+    if (hasAnswered) return;
+
+    setState(() {
+      selectedAnswer = String.fromCharCode(65 + index);
+      hasAnswered = true;
+      if (index == questions[currentQuestion]['correct']) {
+        correctAnswers++;
+      }
+    });
+  }
 
   void _nextQuestion() {
     if (currentQuestion < totalQuestions - 1) {
@@ -258,6 +269,14 @@ class _QuizPageState extends State<QuizPage> {
                       ),
                     ),
                     const SizedBox(height: 20),
+                    ...List.generate(
+                      4,
+                      (index) => _buildAnswerOption(
+                        String.fromCharCode(65 + index),
+                        question['options'][index],
+                        index == question['correct'],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -312,6 +331,74 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                 ],
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAnswerOption(String letter, String text, bool isCorrect) {
+    final isSelected = selectedAnswer == letter;
+    final showResult = hasAnswered && isSelected;
+
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => _checkAnswer(letter.codeUnitAt(0) - 65),
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: showResult && isCorrect
+                ? Colors.green[100]
+                : showResult && !isCorrect
+                    ? Colors.red[100]
+                    : Colors.grey[100],
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(
+              color: showResult && isCorrect
+                  ? Colors.green
+                  : showResult && !isCorrect
+                      ? Colors.red
+                      : Colors.grey[300]!,
+              width: 2,
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: showResult && isCorrect
+                      ? Colors.green
+                      : showResult && !isCorrect
+                          ? Colors.red
+                          : Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.grey[400]!),
+                ),
+                child: Center(
+                  child: Text(
+                    letter,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: showResult ? Colors.white : Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                text,
+                style: const TextStyle(fontSize: 16),
+              ),
+              const Spacer(),
+              if (showResult && isCorrect)
+                const Icon(Icons.check_circle, color: Colors.green)
+              else if (showResult && !isCorrect)
+                const Icon(Icons.cancel, color: Colors.red),
             ],
           ),
         ),
