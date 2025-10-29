@@ -174,6 +174,11 @@ class HomePage extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => QuizPage(
+                lessonTitle: title,
+                lessonType: lessonType,
+                language: language,
+                onQuizComplete: onLessonComplete,
+                customQuestions: customQuestions,
               ),
             ),
           );
