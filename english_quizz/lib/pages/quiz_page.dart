@@ -127,6 +127,25 @@ class _QuizPageState extends State<QuizPage> {
         context,
         MaterialPageRoute(
           builder: (context) => ResultPage(
+            correctAnswers: correctAnswers,
+            totalQuestions: totalQuestions,
+            lessonTitle: widget.lessonTitle,
+            language: widget.language,
+            lessonType: widget.lessonType,
+            onTryAgain: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => QuizPage(
+                    lessonTitle: widget.lessonTitle,
+                    lessonType: widget.lessonType,
+                    language: widget.language,
+                    onQuizComplete: widget.onQuizComplete,
+                    customQuestions: widget.customQuestions,
+                  ),
+                ),
+              );
+            },
           ),
         ),
       );
