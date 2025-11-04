@@ -31,34 +31,39 @@ class _QuizPageState extends State<QuizPage> {
     if (widget.lessonType == 'Vocabulary') {
       return [
         {
-          'question_en': 'He was too shy to ______ to strangers.',
-          'question_vi': 'Anh ấy quá nhút nhát để ______ với người lạ.',
-          'options': ['talk', 'talking', 'talked', 'be talked'],
+          'question_en': 'What is the synonym of “happy”?',
+          'question_vi': 'Từ đồng nghĩa của “happy” là gì?',
+          'options': ['Sad', 'Joyful', 'Angry', 'Tired'],
+          'correct': 1,
+        },
+        {
+          'question_en': 'Choose the word that means “difficult”.',
+          'question_vi': 'Chọn từ có nghĩa là “khó khăn”.',
+          'options': ['Hard', 'Easy', 'Simple', 'Quick'],
           'correct': 0,
         },
         {
-          'question_en': 'I need to ______ my vocabulary for the exam.',
-          'question_vi': 'Tôi cần ______ vốn từ vựng cho kỳ thi.',
-          'options': ['expand', 'expanding', 'expanded', 'expands'],
-          'correct': 0,
+          'question_en': 'What does “polite” mean?',
+          'question_vi': 'Từ “polite” có nghĩa là gì?',
+          'options': [
+            'Thô lỗ',
+            'Lịch sự',
+            'Buồn bã',
+            'Hài hước',
+          ],
+          'correct': 1,
         },
         {
-          'question_en': 'She can ______ three languages fluently.',
-          'question_vi': 'Cô ấy có thể ______ ba ngôn ngữ trôi chảy.',
-          'options': ['spoke', 'speaking', 'speak', 'speaks'],
-          'correct': 2,
+          'question_en': 'Which word is opposite of “clean”?',
+          'question_vi': 'Từ trái nghĩa của “clean” là gì?',
+          'options': ['Clear', 'Dirty', 'Pure', 'Neat'],
+          'correct': 1,
         },
         {
-          'question_en': 'The teacher asked us to ______ new words.',
-          'question_vi': 'Giáo viên yêu cầu chúng tôi ______ từ mới.',
-          'options': ['memorize', 'memorizing', 'memorized', 'memorizes'],
-          'correct': 0,
-        },
-        {
-          'question_en': 'He wants to ______ his pronunciation.',
-          'question_vi': 'Anh ấy muốn ______ cách phát âm của mình.',
-          'options': ['improving', 'improved', 'improve', 'improves'],
-          'correct': 2,
+          'question_en': 'Find the word that means “start something”.',
+          'question_vi': 'Từ nào có nghĩa là “bắt đầu một việc gì đó”?',
+          'options': ['Finish', 'Begin', 'Stop', 'Close'],
+          'correct': 1,
         },
       ];
     } else if (widget.lessonType == 'Custom' && widget.customQuestions != null) {
@@ -159,6 +164,18 @@ class _QuizPageState extends State<QuizPage> {
     });
   }
 
+  void _skipQuestion() {
+    if (currentQuestion < totalQuestions - 1) {
+      setState(() {
+        currentQuestion++;
+        selectedAnswer = null;
+        hasAnswered = false;
+      });
+    } else {
+      _nextQuestion();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final question = questions[currentQuestion];
@@ -194,8 +211,8 @@ class _QuizPageState extends State<QuizPage> {
                   Row(
                     children: [
                       Container(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 8),
                         decoration: BoxDecoration(
                           color: Colors.yellow,
                           borderRadius: BorderRadius.circular(20),
@@ -222,9 +239,10 @@ class _QuizPageState extends State<QuizPage> {
                       MouseRegion(
                         cursor: SystemMouseCursors.click,
                         child: TextButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: _skipQuestion, 
                           child: Text(
                             widget.language == 'English' ? 'Skip' : 'Bỏ qua',
+                            style: const TextStyle(fontSize: 15),
                           ),
                         ),
                       ),
@@ -233,6 +251,8 @@ class _QuizPageState extends State<QuizPage> {
                 ],
               ),
               const SizedBox(height: 30),
+
+              // Câu hỏi
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -248,27 +268,11 @@ class _QuizPageState extends State<QuizPage> {
                         const SizedBox(width: 8),
                         Text(
                           widget.language == 'English'
-                              ? 'Correct Word'
-                              : 'Từ đúng',
-                          style:
-                              const TextStyle(fontWeight: FontWeight.bold),
+                              ? 'Vocabulary Quiz'
+                              : 'Bài kiểm tra từ vựng',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const Spacer(),
-                        MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: const BoxDecoration(
-                              color: Colors.black,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.info_outline,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -300,6 +304,8 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               const Spacer(),
+
+              // Nút Continue & Retry
               Row(
                 children: [
                   Expanded(
