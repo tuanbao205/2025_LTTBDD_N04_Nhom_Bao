@@ -79,6 +79,7 @@ void _addQuizHistory(String lessonType, int score, String lessonTitle) {
   });
 }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,6 +99,18 @@ void _addQuizHistory(String lessonType, int score, String lessonTitle) {
             language: selectedLanguage,
           ),
           SettingsPage(
+            userName: userName,
+            selectedLanguage: selectedLanguage,
+            onLanguageChanged: (String newLanguage) {
+              setState(() {
+                selectedLanguage = newLanguage;
+              });
+            },
+            onQuizCreated: (Map<String, dynamic> newQuiz) {
+              setState(() {
+                customQuizzes.add(newQuiz);
+              });
+            },
           ),
         ],
       ),
