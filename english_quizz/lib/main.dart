@@ -57,8 +57,6 @@ void _addQuizHistory(String lessonType, int score, String lessonTitle) {
       'score': score,
       'date': DateTime.now(),
     });
-
-    // ✅ Nếu là quiz hệ thống (Vocabulary, Grammar)
     if (lessonType != 'Custom') {
       lessonCount[lessonType] = (lessonCount[lessonType] ?? 0) + 1;
 
@@ -66,7 +64,6 @@ void _addQuizHistory(String lessonType, int score, String lessonTitle) {
         lessonBestScore[lessonType] = score;
       }
     } 
-    // ✅ Nếu là quiz tự tạo (Custom)
     else {
       final quizIndex = customQuizzes.indexWhere((q) => q['title'] == lessonTitle);
       if (quizIndex != -1) {
@@ -81,7 +78,6 @@ void _addQuizHistory(String lessonType, int score, String lessonTitle) {
     }
   });
 }
-
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +94,8 @@ void _addQuizHistory(String lessonType, int score, String lessonTitle) {
             customQuizzes: customQuizzes,
           ),
           AchievementsPage(
+            quizHistory: quizHistory,
+            language: selectedLanguage,
           ),
           SettingsPage(
           ),
