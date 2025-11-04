@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../pages/create_quiz_page.dart';
+import '../pages/profile_page.dart'; 
 
 class SettingsPage extends StatelessWidget {
   final String userName;
@@ -18,7 +19,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView( 
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,68 +33,81 @@ class SettingsPage extends StatelessWidget {
             ),
             const SizedBox(height: 30),
 
-            // 🧑 Profile Card
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.grey[300]!, width: 2),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
-                    spreadRadius: 1,
-                    blurRadius: 3,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Colors.teal[100],
-                      shape: BoxShape.circle,
+            // 🧑 Hồ sơ cá nhân 
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfilePage(),
                     ),
-                    child: Center(
-                      child: Text(
-                        userName[0].toUpperCase(),
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.teal,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 15),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        selectedLanguage == 'English'
-                            ? 'Mr. $userName'
-                            : 'Anh $userName',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        '23010194@st.phenikaa-uni.edu.vn',
-                        style: TextStyle(color: Colors.grey[600]),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.grey[300]!, width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.1),
+                        spreadRadius: 1,
+                        blurRadius: 3,
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
-                ],
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.teal[100],
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            userName[0].toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.teal,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            selectedLanguage == 'English'
+                                ? 'Mr. $userName'
+                                : 'Anh $userName',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '23010194@st.phenikaa-uni.edu.vn',
+                            style: TextStyle(color: Colors.grey[600]),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
 
             const SizedBox(height: 20),
 
-            // Language Section
+            // 🌐 Language Section
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -141,7 +155,7 @@ class SettingsPage extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            //  Notifications
+            // 🔔 Notifications
             _buildSettingItem(
               context,
               Icons.notifications_outlined,
@@ -150,10 +164,9 @@ class SettingsPage extends StatelessWidget {
                   : 'Thông báo',
               Colors.orange,
             ),
-
             const SizedBox(height: 15),
 
-            //  Help & Support
+            // ❓ Help & Support
             _buildSettingItem(
               context,
               Icons.help_outline,
@@ -165,46 +178,50 @@ class SettingsPage extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            // Create Quiz Button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CreateQuizPage(
-                        onQuizCreated: (newQuiz) {
-                          onQuizCreated(newQuiz);
-                          Navigator.pop(context);
-                        },
+            // ➕ Create Quiz Button (có con trỏ chuột)
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateQuizPage(
+                          onQuizCreated: (newQuiz) {
+                            onQuizCreated(newQuiz);
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
+                    );
+                  },
+                  icon: const Icon(Icons.add),
+                  label: Text(
+                    selectedLanguage == 'English'
+                        ? 'Create Quiz'
+                        : 'Tạo bài quiz',
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.teal,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                  );
-                },
-                icon: const Icon(Icons.add),
-                label: Text(
-                  selectedLanguage == 'English'
-                      ? 'Create Quiz'
-                      : 'Tạo bài quiz',
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
               ),
             ),
 
-            const SizedBox(height: 40), 
+            const SizedBox(height: 40),
           ],
         ),
       ),
     );
   }
 
+  // 🏳️ Language option 
   Widget _buildLanguageOption(
     BuildContext context,
     String flag,
@@ -246,6 +263,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
+  // ⚙️ Setting item 
   Widget _buildSettingItem(
     BuildContext context,
     IconData icon,
@@ -290,8 +308,7 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Icon(Icons.arrow_forward_ios,
-                  size: 16, color: Colors.grey[400]),
+              Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey[400]),
             ],
           ),
         ),
