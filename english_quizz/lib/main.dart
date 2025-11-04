@@ -57,6 +57,7 @@ void _addQuizHistory(String lessonType, int score, String lessonTitle) {
       'score': score,
       'date': DateTime.now(),
     });
+
     if (lessonType != 'Custom') {
       lessonCount[lessonType] = (lessonCount[lessonType] ?? 0) + 1;
 

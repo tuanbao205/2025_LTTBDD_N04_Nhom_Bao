@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../pages/create_quiz_page.dart';
 
 class SettingsPage extends StatelessWidget {
   final String userName;
@@ -151,6 +152,41 @@ class SettingsPage extends StatelessWidget {
               Colors.blue,
             ),
             const SizedBox(height: 20),
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateQuizPage(
+                          onQuizCreated: (newQuiz) {
+                            onQuizCreated(newQuiz);
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.add),
+                  label: Text(
+                    selectedLanguage == 'English'
+                        ? 'Create Quiz'
+                        : 'Tạo bài quiz',
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.teal,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             const Spacer(),
           ],
         ),
