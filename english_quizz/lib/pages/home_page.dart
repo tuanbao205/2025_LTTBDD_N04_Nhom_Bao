@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../data/translations.dart';
 import '../pages/quiz_page.dart';
 
+
 class HomePage extends StatelessWidget {
   final String userName;
   final String language;

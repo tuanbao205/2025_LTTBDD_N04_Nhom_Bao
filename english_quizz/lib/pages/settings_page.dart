@@ -18,7 +18,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
+      child: SingleChildScrollView( 
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,6 +31,8 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
+
+            // 🧑 Profile Card
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -80,7 +82,7 @@ class SettingsPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'TuanBao@email.com',
+                        '23010194@st.phenikaa-uni.edu.vn',
                         style: TextStyle(color: Colors.grey[600]),
                       ),
                     ],
@@ -88,7 +90,10 @@ class SettingsPage extends StatelessWidget {
                 ],
               ),
             ),
+
             const SizedBox(height: 20),
+
+            // Language Section
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -133,7 +138,10 @@ class SettingsPage extends StatelessWidget {
                 ],
               ),
             ),
+
             const SizedBox(height: 20),
+
+            //  Notifications
             _buildSettingItem(
               context,
               Icons.notifications_outlined,
@@ -142,7 +150,10 @@ class SettingsPage extends StatelessWidget {
                   : 'Thông báo',
               Colors.orange,
             ),
+
             const SizedBox(height: 15),
+
+            //  Help & Support
             _buildSettingItem(
               context,
               Icons.help_outline,
@@ -151,43 +162,43 @@ class SettingsPage extends StatelessWidget {
                   : 'Trợ giúp & Hỗ trợ',
               Colors.blue,
             ),
-            const SizedBox(height: 20),
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CreateQuizPage(
-                          onQuizCreated: (newQuiz) {
-                            onQuizCreated(newQuiz);
-                            Navigator.pop(context);
-                          },
-                        ),
+
+            const SizedBox(height: 30),
+
+            // Create Quiz Button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateQuizPage(
+                        onQuizCreated: (newQuiz) {
+                          onQuizCreated(newQuiz);
+                          Navigator.pop(context);
+                        },
                       ),
-                    );
-                  },
-                  icon: const Icon(Icons.add),
-                  label: Text(
-                    selectedLanguage == 'English'
-                        ? 'Create Quiz'
-                        : 'Tạo bài quiz',
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.teal,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
                     ),
+                  );
+                },
+                icon: const Icon(Icons.add),
+                label: Text(
+                  selectedLanguage == 'English'
+                      ? 'Create Quiz'
+                      : 'Tạo bài quiz',
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
               ),
             ),
-            const Spacer(),
+
+            const SizedBox(height: 40), 
           ],
         ),
       ),
