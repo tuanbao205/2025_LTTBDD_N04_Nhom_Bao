@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'pages/home_page.dart';
 import 'pages/achievements_page.dart';
 import 'pages/settings_page.dart';
+import 'pages/auth_screen.dart'; 
 
 void main() {
   runApp(const LanguageLearningApp());
 }
-
 class LanguageLearningApp extends StatelessWidget {
   const LanguageLearningApp({Key? key}) : super(key: key);
 
@@ -19,7 +19,7 @@ class LanguageLearningApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFFF5F5F5),
         useMaterial3: false,
       ),
-      home: const MainScreen(),
+      home: const AuthScreen(), 
       debugShowCheckedModeBanner: false,
     );
   }
@@ -38,48 +38,38 @@ class _MainScreenState extends State<MainScreen> {
   String selectedLanguage = "English";
   List<Map<String, dynamic>> customQuizzes = [];
   List<Map<String, dynamic>> quizHistory = [];
-  
-  Map<String, int> lessonCount = {
-    'Vocabulary': 0,
-    'Grammar': 0,
-  };
-  
-  Map<String, int> lessonBestScore = {
-    'Vocabulary': 0,
-    'Grammar': 0,
-  };
 
-void _addQuizHistory(String lessonType, int score, String lessonTitle) {
-  setState(() {
-    quizHistory.add({
-      'lessonType': lessonType,
-      'lessonTitle': lessonTitle,
-      'score': score,
-      'date': DateTime.now(),
-    });
+  Map<String, int> lessonCount = {'Vocabulary': 0, 'Grammar': 0};
+  Map<String, int> lessonBestScore = {'Vocabulary': 0, 'Grammar': 0};
 
-    if (lessonType != 'Custom') {
-      lessonCount[lessonType] = (lessonCount[lessonType] ?? 0) + 1;
+  void _addQuizHistory(String lessonType, int score, String lessonTitle) {
+    setState(() {
+      quizHistory.add({
+        'lessonType': lessonType,
+        'lessonTitle': lessonTitle,
+        'score': score,
+        'date': DateTime.now(),
+      });
 
-      if (score > (lessonBestScore[lessonType] ?? 0)) {
-        lessonBestScore[lessonType] = score;
-      }
-    } 
-    else {
-      final quizIndex = customQuizzes.indexWhere((q) => q['title'] == lessonTitle);
-      if (quizIndex != -1) {
-        customQuizzes[quizIndex]['played'] = 
-            (customQuizzes[quizIndex]['played'] ?? 0) + 1;
-
-        final best = (customQuizzes[quizIndex]['bestScore'] ?? 0);
-        if (score > best) {
-          customQuizzes[quizIndex]['bestScore'] = score;
+      if (lessonType != 'Custom') {
+        lessonCount[lessonType] = (lessonCount[lessonType] ?? 0) + 1;
+        if (score > (lessonBestScore[lessonType] ?? 0)) {
+          lessonBestScore[lessonType] = score;
+        }
+      } else {
+        final quizIndex =
+            customQuizzes.indexWhere((q) => q['title'] == lessonTitle);
+        if (quizIndex != -1) {
+          customQuizzes[quizIndex]['played'] =
+              (customQuizzes[quizIndex]['played'] ?? 0) + 1;
+          final best = (customQuizzes[quizIndex]['bestScore'] ?? 0);
+          if (score > best) {
+            customQuizzes[quizIndex]['bestScore'] = score;
+          }
         }
       }
-    }
-  });
-}
-
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,25 +127,18 @@ void _addQuizHistory(String lessonType, int score, String lessonTitle) {
 
   Widget _buildNavItem(IconData icon, int index) {
     final isSelected = _currentIndex == index;
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        child: Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: isSelected ? Colors.yellow : Colors.transparent,
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            icon,
-            color: isSelected ? Colors.teal : Colors.white,
-            size: 28,
-          ),
+    return GestureDetector(
+      onTap: () => setState(() => _currentIndex = index),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.yellow : Colors.transparent,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          icon,
+          color: isSelected ? Colors.teal : Colors.white,
+          size: 28,
         ),
       ),
     );
