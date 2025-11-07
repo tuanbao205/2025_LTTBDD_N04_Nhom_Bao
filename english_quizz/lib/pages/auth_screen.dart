@@ -70,7 +70,7 @@ class _AuthScreenState extends State<AuthScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: const Color(0xFF4CAF50),
+        backgroundColor: Colors.teal,
         behavior: SnackBarBehavior.floating,
         margin: const EdgeInsets.all(20),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -95,8 +95,8 @@ class _AuthScreenState extends State<AuthScreen> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          Color(0xFF81C784),
-                          Color(0xFF66BB6A),
+                          Colors.teal,
+                          Colors.teal,
                         ],
                       ),
                     ),
@@ -192,7 +192,7 @@ class _LoginFormState extends State<LoginForm> {
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF2E7D32),
+            color: Colors.teal,
           ),
         ),
         Text(
@@ -258,7 +258,7 @@ class _LoginFormState extends State<LoginForm> {
               _passwordController.text.trim(),
             ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF66BB6A),
+              backgroundColor: Colors.teal,
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -281,7 +281,7 @@ class _LoginFormState extends State<LoginForm> {
               child: const Text(
                 'Sign Up',
                 style: TextStyle(
-                  color: Color(0xFF66BB6A),
+                  color: Colors.teal,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -323,7 +323,7 @@ class _SignupFormState extends State<SignupForm> {
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF2E7D32),
+            color: Colors.teal,
           ),
         ),
         const SizedBox(height: 40),
@@ -346,7 +346,7 @@ class _SignupFormState extends State<SignupForm> {
               _passwordController.text,
             ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF66BB6A),
+              backgroundColor: Colors.teal,
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -370,7 +370,7 @@ class _SignupFormState extends State<SignupForm> {
               child: const Text(
                 'Sign In',
                 style: TextStyle(
-                  color: Color(0xFF66BB6A),
+                  color: Colors.teal,
                   fontWeight: FontWeight.bold,
                 ),
               ),

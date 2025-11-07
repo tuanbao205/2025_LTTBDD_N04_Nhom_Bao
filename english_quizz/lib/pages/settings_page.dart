@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../pages/create_quiz_page.dart';
-import '../pages/profile_page.dart'; 
+import '../pages/profile_page.dart';
+import '../pages/auth_screen.dart'; 
 
 class SettingsPage extends StatelessWidget {
   final String userName;
@@ -33,7 +34,7 @@ class SettingsPage extends StatelessWidget {
             ),
             const SizedBox(height: 30),
 
-            // 🧑 Hồ sơ cá nhân 
+            // Hồ sơ cá nhân
             MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
@@ -107,7 +108,7 @@ class SettingsPage extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // 🌐 Language Section
+            // Language Section
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -155,30 +156,17 @@ class SettingsPage extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // 🔔 Notifications
+            //  Notifications
             _buildSettingItem(
               context,
               Icons.notifications_outlined,
-              selectedLanguage == 'English'
-                  ? 'Notifications'
-                  : 'Thông báo',
+              selectedLanguage == 'English' ? 'Notifications' : 'Thông báo',
               Colors.orange,
-            ),
-            const SizedBox(height: 15),
-
-            // ❓ Help & Support
-            _buildSettingItem(
-              context,
-              Icons.help_outline,
-              selectedLanguage == 'English'
-                  ? 'Help & Support'
-                  : 'Trợ giúp & Hỗ trợ',
-              Colors.blue,
             ),
 
             const SizedBox(height: 30),
 
-            // ➕ Create Quiz Button (có con trỏ chuột)
+            // Create Quiz Button
             MouseRegion(
               cursor: SystemMouseCursors.click,
               child: SizedBox(
@@ -214,6 +202,41 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
 
+            const SizedBox(height: 25),
+
+            //  Logout button
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AuthScreen(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                  icon: const Icon(Icons.logout),
+                  label: Text(
+                    selectedLanguage == 'English'
+                        ? 'Logout'
+                        : 'Đăng xuất',
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
             const SizedBox(height: 40),
           ],
         ),
@@ -221,7 +244,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  // 🏳️ Language option 
+  //  Language option
   Widget _buildLanguageOption(
     BuildContext context,
     String flag,
@@ -263,7 +286,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  // ⚙️ Setting item 
+  //  Setting item
   Widget _buildSettingItem(
     BuildContext context,
     IconData icon,

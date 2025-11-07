@@ -13,7 +13,7 @@ class LanguageLearningApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Language Learning',
+      title: 'English Quiz',
       theme: ThemeData(
         primarySwatch: Colors.teal,
         scaffoldBackgroundColor: const Color(0xFFF5F5F5),
